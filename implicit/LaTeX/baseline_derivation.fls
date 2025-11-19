@@ -1,8 +1,8 @@
-PWD /Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit
+PWD /Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/LaTeX
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/baseline_derivation.tex
+INPUT /Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/LaTeX/baseline_derivation.tex
 OUTPUT baseline_derivation.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls

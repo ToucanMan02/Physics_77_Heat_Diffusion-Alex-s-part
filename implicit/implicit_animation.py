@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 from matplotlib.animation import FuncAnimation
 
-alpha = 0.1 # heat dif constant
+alpha = 0.8 # heat dif constant
 
 letter = "HI"
 
@@ -95,6 +94,8 @@ for it in range(max_iter-1):
     u = np.dot(C_inv, u_star.T)
     
     u = u.T 
+    # Clamp the surroundings to the fixed temperature
+    u[outside_mask] = T_surrounding
 
     u_pred.append(np.copy(u))
 

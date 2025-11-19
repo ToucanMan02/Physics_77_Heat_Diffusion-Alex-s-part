@@ -2,7 +2,6 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from tqdm import tqdm
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 from matplotlib.animation import FuncAnimation

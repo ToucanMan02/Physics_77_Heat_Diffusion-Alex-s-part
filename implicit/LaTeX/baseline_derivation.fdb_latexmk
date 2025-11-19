@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1763075042.78292 "/Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/baseline_derivation.tex" "baseline_derivation.pdf" "baseline_derivation" 1763075043.09412 0
-  "/Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/baseline_derivation.tex" 1763075021.95472 5421 a4e743d6a7d085f87f3a486c1697c6bb ""
+["pdflatex"] 1763426722.63992 "/Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/LaTeX/baseline_derivation.tex" "baseline_derivation.pdf" "baseline_derivation" 1763426722.95952 0
+  "/Users/jasonfan/Downloads/Physics_77_Heat_Diffusion/implicit/LaTeX/baseline_derivation.tex" 1763075021.95472 5421 a4e743d6a7d085f87f3a486c1697c6bb ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex8.tfm" 1246382020 988 bdf658c3bfc2d96d3c8b02cfc1c94c20 ""
@@ -65,7 +65,7 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1731460199.10764 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1731460140 8221434 3c56d2d12ad6b630b1aee11df04a57af ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "baseline_derivation.aux" 1763075043.06007 120 bb42542939af9e8931884b0f3ff50e9f "pdflatex"
+  "baseline_derivation.aux" 1763426722.92282 120 bb42542939af9e8931884b0f3ff50e9f "pdflatex"
   "baseline_derivation.tex" 1763075021.95472 5421 a4e743d6a7d085f87f3a486c1697c6bb ""
   (generated)
   "baseline_derivation.aux"

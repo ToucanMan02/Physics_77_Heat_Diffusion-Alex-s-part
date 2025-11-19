@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.textpath import TextPath
 import matplotlib.transforms as transforms
 
-alpha = 0.1 # heat dif constant
+alpha = 0.8 # heat dif constant
 
 letter = "EDGAR"
 def letter_m_ini(x, y, N, temp_inside, temp_outside):
