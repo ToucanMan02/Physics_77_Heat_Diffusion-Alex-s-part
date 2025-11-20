@@ -3,10 +3,6 @@ import matplotlib.patches as mpatches
 from matplotlib.patches import Rectangle
 import numpy as np
 
-"""
-Create a clean comparison table visualization for the stability report
-"""
-
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 10))
 
 # ============================================================================

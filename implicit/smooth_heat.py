@@ -173,7 +173,7 @@ try:
 except Exception as e:
     print("Error saving GIF:", e)
 
-plt.close(fig)
+plt.close(figc)
 
 #part 2
 from IPython.display import Image
