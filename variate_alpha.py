@@ -32,11 +32,13 @@ for _ in range(steps):
     eq.solve(var=T, dt=dt)
 
 temp_arr = np.array(T.value).reshape((ny, nx))
+normed = (temp_arr - temp_arr.min()) / (temp_arr.max() - temp_arr.min())
 fig, ax = plt.subplots(figsize=(6, 6))
-img = ax.imshow(temp_arr, origin="lower", extent=[0, 1, 0, 1], cmap="jet")
+img = ax.imshow(normed, origin="lower", extent=[0, 1, 0, 1], cmap="jet",
+                vmin=0.0, vmax=1.0)
 ax.set_xlabel("x"); ax.set_ylabel("y")
 ax.set_title(f"T after {steps} steps (dt={dt})")
-cbar = fig.colorbar(img, ax=ax)
+cbar = fig.colorbar(img, ax=ax, ticks=[0.0, 0.5, 1.0])
 cbar.set_label("Temperature")
 plt.tight_layout()
 plt.savefig("fipy_variable_alpha.png", dpi=300)
