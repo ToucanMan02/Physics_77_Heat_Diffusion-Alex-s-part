@@ -9,7 +9,7 @@ from scipy.ndimage import gaussian_filter
 
 alpha = 0.1  # heat diffusion constant (controls how quickly the heat spreads)
 
-letter = "WOOOOAAAAAHHAHAHA"  # the text that will be turned into a temperature mask
+letter = "❤️"  # the text that will be turned into a temperature mask
 
 
 def letter_m_ini(x, y, N, temp_inside, temp_outside, upscale=4):
