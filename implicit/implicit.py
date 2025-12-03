@@ -119,8 +119,10 @@ A = np.array(tri_disc(N, k), dtype=np.float32)
 C = np.array(tri_disc(N, k), dtype=np.float32) 
 print("2. Generated discretization matrices")
 
+'''
 A_inv = np.linalg.inv(A)
 C_inv = np.linalg.inv(C)
+'''
 
 u_pred = [np.copy(u0)]
 u = np.copy(u0)
@@ -129,30 +131,19 @@ max_iter = 100
 
 print("3. Started iteration session")
 for it in range(max_iter-1):
-    
     u_padded = np.pad(u, 1, mode='edge')
-    
-    S_north = u_padded[0:-2, 1:-1]
-    S_south = u_padded[2:, 1:-1]
-    S_west  = u_padded[1:-1, 0:-2]
-    S_east  = u_padded[1:-1, 2:]
-    S_center = (1 - 4*k) * u
-    
-    S = k * (S_north + S_south + S_west + S_east) + S_center
+    U_y_plus  = u_padded[1:-1, 2:]   # u[i, j+1]
+    U_y_minus = u_padded[1:-1, 0:-2] # u[i, j-1]
+    RHS1 = u + k * (U_y_minus - 2.0*u + U_y_plus)
 
-    u_star[1:-1] = np.dot(S[1:-1], A_inv.T)
-    
-    u_star[0,0] = k*(u[1,0]-2*u[0,0]+u[0,1])+u[0,0]
-    u_star[0,-1] = k*(u[1,-1]-2*u[0,-1]+u[0,-2])+u[0,-1]
-    u_star[-1,0] = k*(u[-2,0]-2*u[-1,0]+u[-1,1])+u[-1,0]
-    u_star[-1,-1] = k*(u[-2,-1]-2*u[-1,-1]+u[-1,-2])+u[-1,-1]
-    u_star[0,1:-1] = k*(-3*u[0,1:-1]+u[1,1:-1]+u[0,:-2]+u[0,2:])+u[0,1:-1]
-    u_star[-1,1:-1] = k*(-3*u[-1,1:-1]+u[-2,1:-1]+u[-1,:-2]+u[-1,2:])+u[-1,1:-1]
+    u_star = np.linalg.solve(A, RHS1)
 
-    u = np.dot(C_inv, u_star.T)
-    
-    u = u.T 
+    u_padded = np.pad(u_star, 1, mode='edge')
+    U_x_plus  = u_padded[2:, 1:-1]   # u[i+1, j]
+    U_x_minus = u_padded[0:-2, 1:-1] # u[i-1, j]
+    RHS2 = u_star + k * (U_x_minus - 2.0*u_star + U_x_plus)
+
+    u = np.linalg.solve(C, RHS2.T).T
 
     u_pred.append(np.copy(u))
-
 resplot(x, y, u_pred, dt, max_iter)
