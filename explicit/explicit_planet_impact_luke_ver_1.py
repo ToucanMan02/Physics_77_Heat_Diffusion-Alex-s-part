@@ -69,7 +69,7 @@ while counter < time :
 
     w = u.copy()
 
-    #trying to make this shit work boundary shit
+    #neumann boundary condition
     w[:,0] = w[:,1]
     w[:,-1] = w[:,-2]
     w[0,:] = w[1,:]
@@ -79,7 +79,7 @@ while counter < time :
     ddy = (w[1:-1, 2:] - 2*w[1:-1, 1:-1] + w[1:-1, :-2]) / dy**2
     u[1:-1, 1:-1] = w[1:-1, 1:-1] + dt * a[1:-1, 1:-1] * (ddx + ddy)
 
-    #trying to make this shit work boundary shit
+    #neumann boundary condition
     u[:,0] = u[:,1]
     u[:,-1] = u[:,-2]
     u[0,:] = u[1,:]
