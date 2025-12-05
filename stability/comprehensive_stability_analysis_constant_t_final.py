@@ -57,7 +57,7 @@ def explicit_heat_step(T, alpha, dx, dt, steps):
             return T, maxvals, False 
         
         maxvals.append(np.max(np.abs(T)))
-    
+
     if maxvals[-1] > 10 * maxvals[0]:
         return T, maxvals, False
     
@@ -196,12 +196,13 @@ for i, alpha in enumerate(alphas):
 
 ax1.set_xscale("log")
 ax1.set_yscale("log")
+ax1.set_ylim(bottom = None, top = 1e10)
 ax1.set_xlabel("Time step (dt)", fontsize=12, fontweight='bold')
 ax1.set_ylabel("max |T| after simulation", fontsize=12, fontweight='bold')
 ax1.set_title("Explicit Method Stability Analysis", fontsize=14, fontweight='bold')
 ax1.grid(True, which='both', ls='--', alpha=0.3)
 ax1.legend(fontsize=9, loc='upper left')
-ax1.set_ylim([1e-3, 1e10])
+ax1.set_ylim([1e-3, 1e7])
 
 ax2 = fig.add_subplot(gs[0, 1])
 for i, alpha in enumerate(alphas):
@@ -219,7 +220,7 @@ ax2.set_title("Crank-Nicolson (ADI) Stability Analysis\n(Unconditionally Stable)
               fontsize=14, fontweight='bold')
 ax2.grid(True, which='both', ls='--', alpha=0.3)
 ax2.legend(fontsize=10)
-ax2.set_ylim([1e-3, 1e10])
+ax2.set_ylim([1e-3, 1e7])
 
 ax3 = fig.add_subplot(gs[1, :])
 
