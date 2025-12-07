@@ -2,7 +2,36 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.linalg import solve
 
-alpha = 0.8 
+nature_rcParams = {
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['Arial', 'Helvetica', 'DejaVu Sans'],
+    'font.size': 10,
+    'axes.labelsize': 10,
+    'axes.titlesize': 10,
+    'xtick.labelsize': 9,
+    'ytick.labelsize': 9,
+    'legend.fontsize': 9,
+    'figure.figsize': (3.5, 3.5),
+    'figure.dpi': 300,
+    'axes.linewidth': 0.5,
+    'grid.linewidth': 0.5,
+    'lines.linewidth': 1.0,
+    'lines.markersize': 3,
+    'xtick.direction': 'in',
+    'ytick.direction': 'in',
+    'xtick.major.size': 3,
+    'ytick.major.size': 3,
+    'xtick.major.width': 0.5,
+    'ytick.major.width': 0.5,
+    'legend.frameon': False,
+    'savefig.bbox': 'tight',
+    'savefig.pad_inches': 0.05,
+    'savefig.format': 'png',
+    'mathtext.fontset': 'dejavusans'
+}
+plt.rcParams.update(nature_rcParams)
+
+alpha = 0.7
 N = 100 
 L = 1.0     
 h = L / N   
@@ -89,6 +118,10 @@ def solve_implicit_adi(U_initial, dt, t_final, alpha, h):
         
     return u
 
+dt_sweet_spot = (h**2) / (6 * alpha)
+
+print(f"For alpha={alpha}, the most accurate timestep is {dt_sweet_spot:.2e}")
+
 def calculate_error(U_numerical, U_exact):
     """
     Calculates the L2 norm of the error (Root Mean Square Error).
@@ -97,7 +130,12 @@ def calculate_error(U_numerical, U_exact):
 
 def run_simulation_and_plot_error():
     t_final = 0.005 
-    dt_range = np.logspace(-7, -4, 20) 
+    
+    # Calculate stability limit
+    dt_cfl = 0.25 * h**2 / alpha
+    
+    # Set dt range to go up to the critical dt
+    dt_range = np.logspace(-7, np.log10(dt_cfl), 20)
 
     U_exact_final = analytical_solution(X, Y, t_final, alpha, sigma0)
     
@@ -112,7 +150,6 @@ def run_simulation_and_plot_error():
             err_exp = calculate_error(U_explicit, U_exact_final)
             error_explicit.append(err_exp)
         except Exception as e:
-
             print(f"Explicit unstable at dt = {dt:.2e}")
             error_explicit.append(np.nan)
 
@@ -120,29 +157,43 @@ def run_simulation_and_plot_error():
         err_adi = calculate_error(U_adi, U_exact_final)
         error_adi.append(err_adi)
     
-    plt.figure(figsize=(9, 6))
+    plt.figure()
     
-    plt.loglog(dt_range, error_explicit, 'o-', label='Explicit (Forward Euler)', color='red')
-    plt.loglog(dt_range, error_adi, 's-', label='Implicit (ADI)', color='blue')
-    
-    first_order_slope = error_adi[0] * (dt_range / dt_range[0])
-    plt.loglog(dt_range, first_order_slope, 'k--', label=r'Theoretical $O(\Delta t)$ Slope', alpha=0.6)
+    plt.plot(dt_range, error_explicit, 'o-', label='Explicit (Forward Euler)', 
+               color='#E64B35')
+    plt.plot(dt_range, error_adi, 's-', label='Implicit (ADI)', 
+               color='#4DBBD5')
 
-    dt_cfl = 0.25 * h**2 / alpha
-    plt.axvline(dt_cfl, color='red', linestyle=':', label=r'Explicit Stability Limit ($\Delta t_{CFL}$)')
+    # Show stability limit as reference
+    plt.axvline(dt_cfl, color='red', linestyle=':',
+                label=r'Explicit Stability Limit ($\Delta t_{CFL}$)')
+    
+    # Zoom in more on the x-axis
+    plt.xlim(0, 3.5e-5)
+    
+    # Calculate appropriate y-axis limits to show the difference - zoom in more
+    plt.ylim(2.0e-4, 3.2e-4)
     
     plt.title('Time Step ($\Delta t$) vs. $L_2$ Error (Accuracy)')
     plt.xlabel('Time Step $\Delta t$ (s)')
-    plt.ylabel(r'$L_2$ Error ($\sqrt{\sum (U_{num} - U_{exact})^2 / N^2}$)')
+    plt.ylabel(r'$L_2$ Error')
     plt.legend()
-    plt.grid(which='both', linestyle='--', alpha=0.5)
+    
+    ax = plt.gca()
+    ax.ticklabel_format(style='sci', axis='both', scilimits=(0,0))
+    ax.yaxis.get_offset_text().set_position((-0.1, 0))
+    ax.yaxis.get_offset_text().set_horizontalalignment('right')
+    
+    ax.set_xticks(np.linspace(0, 3.5e-5, 6))
+    ax.set_yticks(np.linspace(2.0e-4, 3.2e-4, 6))
     
     plt.savefig('error_vs_timestep.png')
     print("\nPlot saved as error_vs_timestep.png")
     
     print(f"\nExplicit Stability Limit (dt_CFL) for N={N} grid: {dt_cfl:.2e}")
+    print(f"dt range used: {dt_range[0]:.2e} to {dt_range[-1]:.2e}")
     
-    plt.figure(figsize=(6, 6))
+    plt.figure()
     plt.imshow(U_adi, cmap='jet', extent=[0, 1, 0, 1], origin='lower')
     plt.colorbar(label='Temperature')
     plt.title(f'Final State (ADI, $\Delta t$={dt_range[0]:.2e})')

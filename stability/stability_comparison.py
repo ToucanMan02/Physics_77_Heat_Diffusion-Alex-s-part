@@ -1,23 +1,18 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ============================================================================
-# SETUP
-# ============================================================================
+ 
 N = 50
 dx = 1.0 / N
 dy = dx
-alpha = 1.0  # Selected single alpha
+alpha = 1.0   
 
-# Initial Conditions (Gaussian Bump)
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 xx, yy = np.meshgrid(x, y)
 T0 = np.exp(-200 * ((xx - 0.5)**2 + (yy - 0.5)**2)).astype(float)
 
-# ============================================================================
-# EXPLICIT METHOD
-# ============================================================================
+ 
 def laplacian(T, dx):
     return (
         np.roll(T, 1, axis=0) +
@@ -41,10 +36,8 @@ def explicit_heat_step(T, alpha, dx, dt, steps):
     if maxvals[-1] > 10 * maxvals[0]:
         return T, maxvals, False
     return T, maxvals, True
-
-# ============================================================================
-# CRANK-NICOLSON (ADI) METHOD
-# ============================================================================
+ 
+ 
 def tri_disc(N, a):
     M = (np.diag(-a * np.ones(N-1), k=-1) +
          np.diag((1+2*a) * np.ones(N), k=0) +
@@ -92,17 +85,15 @@ explicit_max = []
 cn_max = []
 
 for dt in dts:
-    # Run Explicit
+     
     _, vals_exp, _ = explicit_heat_step(T0, alpha, dx, dt, steps)
     explicit_max.append(vals_exp[-1] if np.isfinite(vals_exp[-1]) else 1e10)
     
-    # Run CN
+     
     _, vals_cn, _ = crank_nicolson_step(T0, alpha, dx, dt, steps)
     cn_max.append(vals_cn[-1] if np.isfinite(vals_cn[-1]) else 1e10)
 
-# ============================================================================
-# PLOTTING
-# ============================================================================
+ 
 plt.figure(figsize=(10, 6))
 
 plt.plot(dts, explicit_max, 'o-', color='#e74c3c', label='Explicit (Forward Euler)', linewidth=2, markersize=5)

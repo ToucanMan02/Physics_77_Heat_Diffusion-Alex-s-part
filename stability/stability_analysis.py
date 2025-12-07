@@ -2,18 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 
-"""
-Comprehensive Stability Analysis for all Heat Diffusion Methods in the Project
-===============================================================================
-
-This script analyzes the stability of:
-1. Explicit (Forward Euler) method
-2. Crank-Nicolson (ADI) implicit method
-
-For each method, we test with various time steps and compare against theoretical
-stability criteria.
-"""
-
 N = 50
 dx = 1.0 / N
 dy = dx  
@@ -165,8 +153,6 @@ explicit_results, explicit_stability = test_stability(
     explicit_heat_step, "Explicit (Forward Euler)", T0, dx, alphas, dts, steps
 )
 
-
-
 cn_results, cn_stability = test_stability(
     crank_nicolson_step, "Crank-Nicolson (ADI)", T0, dx, alphas, dts, steps
 )
@@ -175,7 +161,7 @@ cn_results, cn_stability = test_stability(
 fig = plt.figure(figsize=(16, 10))
 gs = GridSpec(2, 2, figure=fig, hspace=0.3, wspace=0.3)
 
-colors = ['#e74c3c', '#3498db', '#2ecc71']  # Red, Blue, Green
+colors = ['#e74c3c', '#3498db', '#2ecc71'] 
 
 ax1 = fig.add_subplot(gs[0, 0])
 for i, alpha in enumerate(alphas):

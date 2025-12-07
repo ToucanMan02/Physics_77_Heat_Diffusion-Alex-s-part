@@ -120,8 +120,6 @@ def animate(i):
 
 anim = FuncAnimation(fig, animate, frames=max_iter, interval=50, blit=True)
 
-# Save as a GIF. 
-# You may need to install pillow: pip install pillow
 try:
     anim.save('heat_diffusion.gif', writer='pillow', fps=20)
     print("5. Animation saved as heat_diffusion.gif")
