@@ -44,10 +44,10 @@ y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
 def analytical_solution(X, Y, t, alpha, sigma0):
-    numerator = sigma0**2
-    denominator = sigma0**2 + 4 * alpha * t
-    exponent = -((X - 0.5)**2 + (Y - 0.5)**2) / denominator
-    U_exact = (numerator / denominator) * np.exp(exponent)
+    num = sigma0**2
+    denom = sigma0**2 + 4 * alpha * t
+    exp = -((X - 0.5)**2 + (Y - 0.5)**2) / denom
+    U_exact = (num / denom) * np.exp(exp)
     return U_exact
 
 def solve_explicit(U_initial, dt, t_final, alpha, h):
