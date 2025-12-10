@@ -72,7 +72,7 @@ def solver(U_in, dt, steps, alpha_complex, h):
         u = solve_A(RHS2.T).T
     return u
 
-def get_exact_propagator(N, dt, alpha_complex):
+def propagator(N, dt, alpha_complex):
     kx = fftfreq(N, d=L/N) * 2 * np.pi
     ky = fftfreq(N, d=L/N) * 2 * np.pi
     KX, KY = np.meshgrid(kx, ky, indexing='ij')
@@ -88,7 +88,7 @@ def scan_angular_error_zoomed():
     U_num = solver(U0, dt, steps, alpha_complex, h)
     
     fft_0 = fftn(U0)
-    fft_exact = fft_0 * get_exact_propagator(N, steps * dt, alpha_complex)
+    fft_exact = fft_0 * propagator(N, steps * dt, alpha_complex)
     fft_num = fftn(U_num)
     
     spec_num = fftshift(np.abs(fft_num))
