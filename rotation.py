@@ -34,14 +34,11 @@ style_rcParams = {
 }
 plt.rcParams.update(style_rcParams)
 
-# --- Parameters ---
 N = 100
 L = 1.0
 h = L / N
 t_final = 0.0005
 
-# CRITICAL CHANGE: Lower the target radius so the signal survives!
-# k=150 is dead (1e-25). k=40 is alive (~0.02).
 target_k_radius = 40 
 alpha_complex = 1.0 + 0j 
 
@@ -49,11 +46,9 @@ x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
-# Initial Condition: White Noise
 np.random.seed(42)
 U0 = np.random.normal(0, 1, (N, N)) + 0j
 
-# --- Solver ---
 def solve_complex_system(U_in, dt, steps, alpha_complex, h):
     u = np.copy(U_in).astype(np.complex128)
     N_grid = u.shape[0]
@@ -99,12 +94,10 @@ def scan_angular_error_zoomed():
     spec_num = fftshift(np.abs(fft_num))
     spec_exact = fftshift(np.abs(fft_exact))
     
-    # Calculate Relative Error
     mask = spec_exact > 1e-15 
     error_map = np.zeros_like(spec_num)
     error_map[mask] = np.abs(spec_num[mask] / spec_exact[mask] - 1.0)
     
-    # Angular Interpolation
     kx = fftshift(fftfreq(N, d=L/N)) * 2 * np.pi
     ky = fftshift(fftfreq(N, d=L/N)) * 2 * np.pi
     
@@ -117,16 +110,13 @@ def scan_angular_error_zoomed():
     points = np.column_stack((circle_kx, circle_ky))
     angular_error = interp(points)
     
-    # Print stats to verify it's not zero
     print(f"Min Error: {np.min(angular_error):.2e}")
     print(f"Max Error: {np.max(angular_error):.2e}")
 
-    # --- Plotting ---
     plt.figure()
     plt.plot(np.degrees(thetas), angular_error, color='#E64B35', linewidth=1.5)
     plt.xlim(0, 360)
     
-    # Auto-Zoom to data range
     y_min, y_max = np.min(angular_error), np.max(angular_error)
     margin = (y_max - y_min) * 0.1 if (y_max - y_min) > 0 else 1e-10
     plt.ylim(y_min - margin, y_max + margin)
@@ -136,7 +126,6 @@ def scan_angular_error_zoomed():
     plt.title(f'Angular Profile (Heat Mode, $|k|={target_k_radius}$)')
     plt.grid(True, alpha=0.3)
     
-    # Reference Lines for Diagonals
     for angle in [45, 135, 225, 315]:
         plt.axvline(angle, color='b', linestyle='--', alpha=0.3)
     
