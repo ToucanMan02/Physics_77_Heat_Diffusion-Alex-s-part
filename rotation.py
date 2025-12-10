@@ -49,7 +49,7 @@ X, Y = np.meshgrid(x, y)
 np.random.seed(42)
 U0 = np.random.normal(0, 1, (N, N)) + 0j
 
-def solve_complex_system(U_in, dt, steps, alpha_complex, h):
+def solver(U_in, dt, steps, alpha_complex, h):
     u = np.copy(U_in).astype(np.complex128)
     N_grid = u.shape[0]
     k = alpha_complex * dt / (2 * h**2)
@@ -85,7 +85,7 @@ def scan_angular_error_zoomed():
     dt = (h**2 / 4) * 100.0 
     steps = max(1, int(t_final / dt))
     
-    U_num = solve_complex_system(U0, dt, steps, alpha_complex, h)
+    U_num = solver(U0, dt, steps, alpha_complex, h)
     
     fft_0 = fftn(U0)
     fft_exact = fft_0 * get_exact_propagator(N, steps * dt, alpha_complex)
