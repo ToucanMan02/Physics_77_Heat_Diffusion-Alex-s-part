@@ -189,8 +189,8 @@ def run_simulation_and_plot_error():
     #ax.set_xticks(np.linspace(0, 3.5e-5, 6))
     #ax.set_yticks(np.linspace(2.0e-4, 3.2e-4, 6))
     ax.grid(alpha= 0.3, ls = "--")
-    plt.savefig('error_vs_timestep_log_scaled.png')
-    print("\nPlot saved as error_vs_timestep_log_scaled.png")
+    plt.savefig('error_vs_timestep_linear_scaled.png')
+    print("\nPlot saved as error_vs_timestep_linear_scaled.png")
     
     print(f"\nExplicit Stability Limit (dt_CFL) for N={N} grid: {dt_cfl:.2e}")
     print(f"dt range used: {dt_range[0]:.2e} to {dt_range[-1]:.2e}")
