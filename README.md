@@ -5,7 +5,8 @@ This repository contains all code, notebooks, figures, and data required to repr
 The project investigates numerical stability, accuracy, and anisotropy in explicit and implicit solvers for the 2D heat equation, with a primary focus on the Peaceman–Rachford Alternating Direction Implicit (ADI) method.
 
 
-## Repository Structure
+## How to run
+Go to Final_report/Heat_Diffusion_Physics_77.ipynb, and run all cells. It will produce all figures generated within the paper. 
 
 ## Requirements
 Specified in requirement.txt.
